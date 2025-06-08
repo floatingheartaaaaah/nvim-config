@@ -6,7 +6,7 @@ return {
 	},
 	config = function()
 		local mason = require("mason")
-		local masonconfig = require("mason-lspconfig")
+		local mason_lspconfig = require("mason-lspconfig")
 		local mason_tool_installer = require("mason-tool-installer")
 
 		mason.setup({
@@ -19,8 +19,9 @@ return {
 			},
 		})
 
-		masonconfig.setup({
+		mason_lspconfig.setup({
 			ensure_installed = {
+				-- LSP servers
 				"ts_ls",
 				"html",
 				"cssls",
@@ -31,20 +32,21 @@ return {
 				"emmet_ls",
 				"prismals",
 				"pyright",
+				"jsonls", -- ✅ JSON support
 			},
-			automatic_installation = true,
+			automatic_installation = false,
 		})
 
 		mason_tool_installer.setup({
 			ensure_installed = {
-				"prettier", -- formatter
-				"stylua", -- Lua formatter
-				"isort", -- Python formatter
-				"black", -- Python formatter
-				"pylint", -- Python linter
-				"eslint_d", -- JavaScript linter
+				-- Formatters & Linters
+				"prettier",
+				"stylua",
+				"isort",
+				"black",
+				"eslint_d",
+				"pylint",
 			},
 		})
 	end,
 }
- 

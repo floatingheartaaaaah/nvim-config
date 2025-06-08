@@ -35,7 +35,7 @@ opt.inccommand = "nosplit"
 -- Files
 opt.swapfile = false
 opt.backup = false
-opt.undofile = false
+opt.undofile = true
 opt.undodir = vim.fn.stdpath("config") .. "/undodir"
 
 -- Clipboard

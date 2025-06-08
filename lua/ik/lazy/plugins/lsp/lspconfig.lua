@@ -8,16 +8,14 @@ return {
 	},
 	config = function()
 		local lspconfig = require("lspconfig")
-		local nvim_lsp = require("cmp_nvim_lsp")
+		local cmp_nvim_lsp = require("cmp_nvim_lsp")
 
-		-- Set capabilities from cmp-nvim-lsp
-		local capabilities = nvim_lsp.default_capabilities()
+		local capabilities = cmp_nvim_lsp.default_capabilities()
 
 		local keymap = vim.keymap
 		local opts = { noremap = true, silent = true }
 
-		local on_attach = function(client, bufnr)
-			print(client)
+		local on_attach = function(_, bufnr)
 			opts.buffer = bufnr
 
 			opts.desc = "Show LSP references"
@@ -60,27 +58,45 @@ return {
 			keymap.set("n", "<leader>rs", ":LspRestart<CR>", opts)
 		end
 
-		-- Example LSP server setup (add more as needed)
-		lspconfig.ts_ls.setup({
-			capabilities = capabilities,
-			on_attach = on_attach,
-		})
-
-		lspconfig.pyright.setup({
-			capabilities = capabilities,
-			on_attach = on_attach,
-		})
-
-		lspconfig.lua_ls.setup({
-			capabilities = capabilities,
-			on_attach = on_attach,
-			settings = {
-				Lua = {
-					diagnostics = {
-						globals = { "vim" },
+		-- LSP servers setup
+		local servers = {
+			ts_ls = {},
+			pyright = {},
+			html = {},
+			cssls = {},
+			tailwindcss = {},
+			svelte = {},
+			lua_ls = {
+				settings = {
+					Lua = {
+						diagnostics = {
+							globals = { "vim" },
+						},
+						workspace = {
+							library = vim.api.nvim_get_runtime_file("", true),
+							checkThirdParty = false,
+						},
+						telemetry = { enable = false },
 					},
 				},
 			},
-		})
+			graphql = {},
+			emmet_ls = {},
+			prismals = {},
+			jsonls = {
+				settings = {
+					json = {
+						schemas = require("schemastore").json.schemas(),
+						validate = { enable = true },
+					},
+				},
+			},
+		}
+
+		for server, config in pairs(servers) do
+			config.capabilities = capabilities
+			config.on_attach = on_attach
+			lspconfig[server].setup(config)
+		end
 	end,
 }

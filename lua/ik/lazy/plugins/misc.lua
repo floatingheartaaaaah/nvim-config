@@ -20,6 +20,10 @@ return {
 		end,
 	},
 	{
+		"b0o/schemastore.nvim",
+		lazy = true,
+	},
+	{
 		"lukas-reineke/indent-blankline.nvim",
 		event = { "BufReadPre", "BufNewFile" },
 		main = "ibl",
@@ -75,5 +79,34 @@ return {
 		event = { "BufReadPre", "BufNewFile" },
 		version = "*", -- Use for stability; omit to use `main` branch for the latest features
 		config = true,
+	},
+	-- tailwind-tools.lua
+	{
+		"luckasRanarison/tailwind-tools.nvim",
+		name = "tailwind-tools",
+		build = ":UpdateRemotePlugins",
+		dependencies = {
+			"nvim-treesitter/nvim-treesitter",
+			"nvim-telescope/telescope.nvim", -- optional
+			"neovim/nvim-lspconfig", -- optional
+		},
+		opts = {}, -- your configuration
+	},
+	{
+		"linux-cultist/venv-selector.nvim",
+		dependencies = {
+			"neovim/nvim-lspconfig",
+			"mfussenegger/nvim-dap",
+			"mfussenegger/nvim-dap-python", --optional
+			{ "nvim-telescope/telescope.nvim", branch = "0.1.x", dependencies = { "nvim-lua/plenary.nvim" } },
+		},
+		lazy = false,
+		branch = "regexp", -- This is the regexp branch, use this for the new version
+		config = function()
+			require("venv-selector").setup()
+		end,
+		keys = {
+			{ "<leader>v", "<cmd>VenvSelect<cr>" },
+		},
 	},
 }

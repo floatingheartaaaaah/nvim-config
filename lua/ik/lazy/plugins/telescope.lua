@@ -8,10 +8,21 @@ return {
 			local builtin = require("telescope.builtin")
 			local telescope = require("telescope")
 			local actions = require("telescope.actions")
+			require("telescope").setup({
+				pickers = {
+					find_files = {
+						theme = "ivy",
+					},
+				},
+				extensions = {
+					fzf = {},
+				},
+			})
 			telescope.load_extension("fzf")
 			vim.keymap.set("n", "<leader>p", builtin.find_files, { desc = "Telescope find files" })
 			vim.keymap.set("n", "<leader>g", builtin.live_grep, { desc = "Telescope live grep" })
-			vim.keymap.set("n", "<leader>tb", builtin.buffers, { desc = "Telescope buffers" })
+			vim.keymap.set("n", "<leader>n", builtin.buffers, { desc = "Telescope buffers" })
+			vim.keymap.set("n", "<leader>se", "<cmd>Telescope session-lens<CR>")
 		end,
 	},
 	{

@@ -4,16 +4,33 @@ return {
 	config = function()
 		local nvimtree = require("nvim-tree")
 
-		-- recommended settings from nvim-tree documentation
+		-- recommended disabling of netrw
 		vim.g.loaded_netrw = 1
 		vim.g.loaded_netrwPlugin = 1
 
 		nvimtree.setup({
 			view = {
-				width = 35,
-				relativenumber = true,
+				float = {
+					enable = true,
+					quit_on_focus_loss = true,
+					open_win_config = {
+						relative = "editor",
+						border = "rounded",
+						width = 100,
+						height = 70,
+						row = 2,
+						col = 2,
+					},
+				},
+				width = 40,
+				side = "center",
+				number = false,
+				relativenumber = false,
+				signcolumn = "yes",
+				cursorline = true,
+				debounce_delay = 15,
 			},
-			-- change folder arrow icons
+
 			renderer = {
 				indent_markers = {
 					enable = true,
@@ -23,75 +40,67 @@ return {
 						default = "",
 						symlink = "",
 						bookmark = "󰆤",
-						modified = "●",
 						hidden = "󰜌",
 						folder = {
-							arrow_closed = "", -- arrow when folder is closed
-							arrow_open = "", -- arrow when folder is open
+							arrow_closed = "",
+							arrow_open = "",
 						},
 						git = {
-							unstaged = "✗",
-							staged = "✓",
-							unmerged = "",
-							renamed = "➜",
-							untracked = "★",
-							deleted = "",
-							ignored = "◌",
+							unstaged = "",
+							staged = "",
+							unmerged = "",
+							renamed = "",
+							untracked = "",
+							deleted = "",
+							ignored = "",
 						},
 					},
 					show = {
 						file = true,
 						folder = true,
 						folder_arrow = true,
-						git = true,
-						modified = true,
-						hidden = true,
-						diagnostics = true,
-						bookmarks = true,
+						git = false,
+						modified = false,
+						hidden = false,
+						diagnostics = false,
+						bookmarks = false,
 					},
-				},
-			},
-			diagnostics = {
-				enable = true,
-				show_on_dirs = false,
-				show_on_open_dirs = true,
-				debounce_delay = 500,
-				severity = {
-					min = vim.diagnostic.severity.HINT,
-					max = vim.diagnostic.severity.ERROR,
-				},
-				icons = {
-					hint = "",
-					info = "",
-					warning = "",
-					error = "",
 				},
 			},
 
-			-- disable window_picker for
-			-- explorer to work well with
-			-- window splits
-			actions = {
-				open_file = {
-					window_picker = {
-						enable = false,
-					},
-				},
+			diagnostics = {
+				enable = false,
 			},
-			filters = {
-				custom = { ".DS_Store" },
-			},
+
 			git = {
+				enable = false,
 				ignore = false,
 			},
+
+			filters = {
+				dotfiles = false,
+				git_clean = false,
+				no_buffer = false,
+				custom = {},
+				exclude = {},
+			},
+
+			actions = {
+				open_file = {
+					quit_on_open = true,
+				},
+			},
+
+			-- optional: disables window resizing behavior on open
+			respect_buf_cwd = true,
+			sync_root_with_cwd = true,
+			update_focused_file = {
+				enable = true,
+				update_root = false,
+			},
 		})
-
-		-- set keymaps
-		local keymap = vim.keymap -- for conciseness
-
-		keymap.set("n", "<leader>b", "<cmd>NvimTreeToggle<CR>", { desc = "Toggle file explorer" }) -- toggle file explorer
-		keymap.set("n", "<leader>e", "<cmd>NvimTreeFocus<CR>", { desc = "Toggle file explorer on current file" }) -- toggle file explorer on current file
-		keymap.set("n", "<leader>ec", "<cmd>NvimTreeCollapse<CR>", { desc = "Collapse file explorer" }) -- collapse file explorer
-		keymap.set("n", "<leader>er", "<cmd>NvimTreeRefresh<CR>", { desc = "Refresh file explorer" }) -- refresh file explorer
+		vim.keymap.set("n", "<leader>e", ":NvimTreeToggle<CR>", { desc = "Toggle NvimTree" })
+		vim.keymap.set("n", "<leader>o", ":NvimTreeFocus<CR>", { desc = "Focus NvimTree" })
+		vim.keymap.set("n", "<leader>r", ":NvimTreeRefresh<CR>", { desc = "Refresh NvimTree" })
 	end,
 }

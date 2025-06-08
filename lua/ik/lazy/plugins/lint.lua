@@ -14,11 +14,27 @@ return {
 		}
 
 		local lint_augroup = vim.api.nvim_create_augroup("lint", { clear = true })
+		local timer = vim.loop.new_timer()
+		local debounce_ms = 500
 
-		vim.api.nvim_create_autocmd({ "BufEnter", "BufWritePost", "InsertLeave" }, {
+		vim.api.nvim_create_autocmd({ "BufWritePost" }, {
 			group = lint_augroup,
 			callback = function()
 				lint.try_lint()
+			end,
+		})
+
+		vim.api.nvim_create_autocmd({ "InsertLeave" }, {
+			group = lint_augroup,
+			callback = function()
+				timer:stop()
+				timer:start(
+					debounce_ms,
+					0,
+					vim.schedule_wrap(function()
+						lint.try_lint()
+					end)
+				)
 			end,
 		})
 
