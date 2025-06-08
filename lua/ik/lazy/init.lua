@@ -21,6 +21,7 @@ require("lazy").setup({
 		-- import your plugins
 		{ import = "ik.lazy.plugins" },
 		{ import = "ik.lazy.plugins.lsp" },
+		{ import = "ik.lazy.plugins.telescope" },
 	},
 	checker = { enabled = true, notify = false },
 	change_detection = { notify = false },
