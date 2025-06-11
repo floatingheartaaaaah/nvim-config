@@ -9,6 +9,7 @@ return {
 		vim.g.loaded_netrwPlugin = 1
 
 		nvimtree.setup({
+			prefer_startup_root = true,
 			view = {
 				float = {
 					enable = true,
@@ -62,16 +63,28 @@ return {
 						git = true,
 						modified = false,
 						hidden = false,
-						diagnostics = false,
+						diagnostics = true,
 						bookmarks = false,
 					},
 				},
 			},
 
 			diagnostics = {
-				enable = false,
+				enable = true,
+				show_on_dirs = false,
+				show_on_open_dirs = true,
+				debounce_delay = 500,
+				severity = {
+					min = vim.diagnostic.severity.HINT,
+					max = vim.diagnostic.severity.ERROR,
+				},
+				icons = {
+					hint = "",
+					info = "",
+					warning = "",
+					error = "",
+				},
 			},
-
 			git = {
 				enable = true,
 				ignore = false,

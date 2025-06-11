@@ -1,0 +1,41 @@
+# stylua.toml
+
+# Project paths (optional)
+include = "**/*.lua"
+
+# Indentation settings
+indent_type = "Spaces"
+indent_width = 2
+
+# Line width
+column_width = 100
+
+# Quote style
+quote_style = "AutoPreferDouble"  # Options: Auto, AutoPreferDouble, ForceSingle, ForceDouble
+
+# Call parenthesis
+call_parentheses = "Always"       # Options: Always, NoSingleString, None
+
+# Line endings
+line_endings = "Unix"             # Options: Unix, Windows
+
+# Sort imports (experimental)
+sort_requires = true
+
+# Align consecutive fields in tables (experimental)
+align_call_args = false
+align_function_params = false
+align_table_field = false
+
+# Table formatting
+collapse_simple_statement = "Always"   # Can also be "Never" or "Only"
+collapse_simple_function = true
+
+# Format comments
+format_comments = true
+
+# Spaces
+no_call_parentheses = false
+separate_then = false
+spaces_around_table_field_list = true
+
